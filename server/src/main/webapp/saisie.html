@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passage dans une salle</title>
+</head>
+<body>
+    <h1>Passage dans une salle</h1>
+    <p>Indiquez le nom d'une salle, et cliquez sur l'un des boutons pour indiquer que vous y entrez ou que vous en sortez.</p>
+    <form method="post" action="passage.jsp">
+        <p>
+            <label>
+                Nom de la salle :
+                <input type="text" name="nom">
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Entrée" name="entree">
+            <input type="submit" value="Sortie" name="sortie">
+        </p>
+    </form>
+    <p><a href="Deco">Déconnexion</a></p>
+</body>
+</html>
