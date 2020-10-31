@@ -58,15 +58,8 @@ beanName="{package.class | <%= expression %>}" type="package.class"
 
 <% List<Passage> passagesAffiches = null; %>
 
-<c:if test="${sessionScope.admin}">
-    <h1>Liste de tous les passages</h1>
-    <% passagesAffiches = passages.getAllPassages(); %>
-</c:if>
-
-<c:if test="${!sessionScope.admin}">
     <h1>Liste de vos passages</h1>
     <% passagesAffiches = passages.getPassagesByUser((User) session.getAttribute("user")); %>
-</c:if>
 
 <table>
     <tr>
