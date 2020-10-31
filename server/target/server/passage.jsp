@@ -8,7 +8,25 @@
 <%@ page import="classes.User" %>
 <%@ page import="java.util.List" %>
 
-<%! private final GestionPassages passages = new GestionPassages(); %>
+
+<%--
+
+// la déclaration que nous avions avant:
+        <%! private final GestionPassages passages = new GestionPassages(); %>
+
+// la déclaration qu'on a après.
+
+<jsp:useBean
+        id="beanInstanceName"
+        scope="page|request|session|application"
+{ class="package.class" |
+type="package.class" |
+class="package.class" type="package.class" |
+beanName="{package.class | <%= expression %>}" type="package.class"
+} --%>
+
+<jsp:useBean id="passages" scope="application" type="classes.GestionPassages" class="classes.GestionPassages"></jsp:useBean>
+
 
 <% if (request.getMethod().equals("POST")) { // Traitement du formulaire envoyé par saisie.html
 
@@ -74,7 +92,12 @@
     </c:forEach>
 </table>
 
+<%--
+ creation des parametres pour identifier
+  --%>
 <p><a href="saisie.html">Saisir un nouveau passage</a></p>
+<p><a href="salle.jsp"> voir les salles </a></p>
+<p><a href="user.jsp"> profil User </a></p>
 <p><a href="Deco">Se déconnecter</a></p>
 
 </body>
