@@ -36,6 +36,8 @@
 <div class="menu">
   <ul>
 <c:choose>
+
+
   <c:when test="${!sessionScope.admin}">
     <li><a href="${passageUrlUser}">Passage</a></li>
 
