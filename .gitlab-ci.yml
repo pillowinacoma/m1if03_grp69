@@ -22,7 +22,7 @@ test :
 deploy : 
     stage : deploy
     before_script:
-        - . conf.sh && echo "$CI_SSH_KEY" > ci_private_key.pem && chmod 400 ci_private_key.pem
+        - . conf.sh && echo "$CI_SSH_KEY" > /server/ci_private_key.pem && chmod 400 /server/ci_private_key.pem
     script :
         - cd server && mvn package 
         - pwd
