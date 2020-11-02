@@ -10,14 +10,14 @@ build :
     before_script:
         - . conf.sh
     script :
-        - cd serveur && mvn compile
+        - cd server && mvn compile
 
 test : 
     stage : test
     before_script:
         - . conf.sh
     script :
-        - cd serveur && mvn test 
+        - cd server && mvn test 
 
 deploy : 
     stage : deploy
