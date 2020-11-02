@@ -1,0 +1,30 @@
+image: maven:3.6.1-jdk-11 
+
+stages:
+    - build
+    - test
+    - deploy
+
+build : 
+    stage : build
+    before_script:
+        - . conf.sh
+    script :
+        - mvn compile
+
+test : 
+    stage : test
+    before_script:
+        - . conf.sh
+    script :
+        - mvn test 
+
+deploy : 
+    stage : deploy
+    before_script:
+        - . conf.sh && echo "$CI_SSH_KEY" > ci_private_key.pem && chmod 400 ci_private_key.pem
+    script :
+        - mvn package 
+        - pwd
+        - ls -l
+        - scp -v -o StrictHostKeyChecking=no -i ci_private_key.pem /builds/p1612291/conception-dapplication-web/target/Serveur.war gitlabci@192.168.75.115:/opt/tomcat/webapps/v1.war
