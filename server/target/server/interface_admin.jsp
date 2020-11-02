@@ -1,61 +1,69 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mahmoud
-  Date: 31/10/2020
-  Time: 12:10
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="classes.Passage" %>
-<%@ page import="classes.GestionPassages" %>
-<%@ page import="classes.Salle" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="classes.User" %>
-<%@ page import="java.util.List" %>
-<html>
+<%@ page import="classes.Salle" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.ParseException" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page errorPage="erreurs/error.jsp" %>
+
+<c:if test="${!sessionScope.user.admin}">
+  <% response.sendRedirect("interface.jsp"); %>
+</c:if>
+
+<jsp:useBean id="passages" type="classes.GestionPassages" scope="application"/>
+
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <title>Menu</title>
+  <meta charset="UTF-8">
+  <title>Présence UCBL</title>
+  <link rel="stylesheet" type="text/css" href="static/presence.css">
 </head>
 <body>
+<jsp:include page="composants/header.jsp"/>
 
-<h1> MENU </h1>
+<main class="wrapper">
+  <jsp:include page="composants/menu_admin.jsp"/>
+  <article class="contenu">
+    <c:choose>
+      <c:when test="${param.contenu == null }">
+        <jsp:include page="contenus/default_admin.jsp"/>
+      </c:when>
+      <c:when test="${param.contenu == \"passages\"}">
+        <%
+          if (request.getParameter("nomSalle") != null) {
+            if (request.getParameter("login") != null)
+              request.setAttribute("passagesAffiches", passages.getPassagesByUserAndSalle(new User(request.getParameter("login")), new Salle(request.getParameter("nomSalle"))));
+            else if (request.getParameter("dateEntree") != null && request.getParameter("dateSortie") != null) {
+              try {
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", new Locale("us"));
+                Date dateEntree = sdf.parse(request.getParameter("dateEntree"));
+                Date dateSortie = sdf.parse(request.getParameter("dateSortie"));
+                request.setAttribute("passagesAffiches", passages.getPassagesBySalleAndDates(new Salle(request.getParameter("nomSalle")), dateEntree, dateSortie));
+              } catch (ParseException e) {
+                e.printStackTrace();
+              }
+            } else
+              request.setAttribute("passagesAffiches", passages.getPassagesBySalle(new Salle(request.getParameter("nomSalle"))));
+          } else if (request.getParameter("login") != null)
+            request.setAttribute("passagesAffiches", passages.getPassagesByUser(new User(request.getParameter("login"))));
+          else
+            request.setAttribute("passagesAffiches", passages.getAllPassages());
+        %>
+        <jsp:include page="contenus/passages.jsp"/>
+      </c:when>
+      <c:when test="${param.contenu == \"user\"}">
+        <jsp:include page="contenus/user.jsp?login=${param.login}"/>
+      </c:when>
+      <c:otherwise>
+        <jsp:include page="contenus/${param.contenu}.jsp"/>
+      </c:otherwise>
+    </c:choose>
+  </article>
+</main>
 
-<c:url value="passage.jsp" var="passageUrlUser"/>
-<c:url value="passage_admin.jsp" var="passageUrlAdm"/>
-<c:url value="user.jsp" var="userUrl"/>
-<c:url value="Deco" var="logoutUrl"/>
-
-
-
-<div>
-
-</div>
-
-<div class="menu">
-  <ul>
-<c:choose>
-  <c:when test="${!sessionScope.admin}">
-    <li><a href="${passageUrlUser}">Passage</a></li>
-
-  </c:when>
-  <c:otherwise>
-    <li><a href="${passageUrlAdm}">Passage</a></li>
-    <br />
-  </c:otherwise>
-</c:choose>
-
-
-    <li><a href="${userUrl}">User</a></li>
-
-
-    <li><a href="${logoutUrl}">Déconnexion</a></li>
-  </ul>
-  <br style="clear:left"/>
-</div>
-
-
+<jsp:include page="composants/footer.html"/>
 </body>
 </html>
-

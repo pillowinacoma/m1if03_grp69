@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class User {
     private final String login;
+    private String nom;
     private Boolean admin = false;
 
     public User(String login) {
@@ -17,6 +18,14 @@ public class User {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public Boolean getAdmin() {
