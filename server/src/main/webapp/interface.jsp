@@ -4,8 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page errorPage="erreurs/error.jsp" %>
 
-<jsp:useBean id="passages" class="classes.GestionPassages" scope="application"/>
-<jsp:useBean id="salles" class="java.util.HashMap" scope="application"/>
+<jsp:useBean id="passages" class="classes.GestionPassages"  type="classes.GestionPassages" scope="application"/>
+<jsp:useBean id="salles" class="java.util.HashMap" type="java.util.Map<java.lang.String,classes.Salle>" scope="application"/>
 <jsp:useBean id="users" class="java.util.HashMap" type="java.util.Map<java.lang.String,classes.User>" scope="application"/>
 
 <% // Très moche :
