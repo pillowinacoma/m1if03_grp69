@@ -3,9 +3,9 @@
 <aside class="menu">
     <p><strong>Menu</strong></p>
     <p>
-        <a href="interface.jsp">Accueil</a><br>
-        <a href="interface.jsp?contenu=saisie_passage">Nouveau passage</a><br>
-        <a href="interface.jsp?contenu=passages">Mes passages</a>
+        <a href="presence">Accueil</a><br>
+        <a href="presence?contenu=saisie_passage_form">Nouveau passage</a><br>
+        <a href="presence?contenu=passagesUser">Mes passages</a>
     </p>
     <c:if test="${sessionScope.user.admin}">
         <p>

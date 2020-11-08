@@ -1,13 +1,20 @@
+<%@ page import="classes.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="classes.Passage" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<jsp:useBean id="passages" type="classes.GestionPassages" scope="application"/>
+<%
+
+    List<Passage> passageList = (List<Passage>) request.getAttribute("passagesEnCours");
+    User user = (User) request.getSession().getAttribute("user");
+%>
 
 <section id="contenu">
-    <p><strong>Hello ${sessionScope.user.nom} !</strong></p>
-    <c:set var="myPassages" value="${passages.getPassagesByUserEncours(sessionScope.user)}"/>
+    <p><strong>Hello <%= user.getLogin() %> !</strong></p>
+    <c:set var="myPassages" value="<%= passageList%>"/>
     <c:if test="${myPassages.size() > 0}">
-        <p>Vous êtes actuellement dans les salles :</p>
+        <p>Vous êtes actuellement dans les :</p>
         <ul>
             <c:forEach var="p" items="${myPassages}">
                 <li>

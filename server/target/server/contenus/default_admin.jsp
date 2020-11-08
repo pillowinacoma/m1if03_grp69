@@ -3,5 +3,5 @@
 
 <section id="contenu">
     <h1>Interface d'administration</h1>
-    <p>Choisissez une option dans le menu.</p>
+    <p>choisissez une option dans le menu.</p>
 </section>

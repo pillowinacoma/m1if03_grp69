@@ -6,7 +6,7 @@ import java.util.List;
 public class GestionPassages {
     private final List<Passage> passages = new ArrayList<>();
 
-    public void add(Passage passage) {
+    public void addPassage(Passage passage) {
         this.passages.add(passage);
     }
 

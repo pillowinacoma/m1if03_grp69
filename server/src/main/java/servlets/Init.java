@@ -24,8 +24,6 @@ public class Init extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException{
-
-        super.init(config);
         ServletContext cntx = config.getServletContext();
         cntx.setAttribute("Salles",new HashMap<String,Salle>());
         cntx.setAttribute("Users",new HashMap<String,User>());
@@ -34,8 +32,7 @@ public class Init extends HttpServlet {
     }
 
 
-
-   /* protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /* protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         if(login != null && !login.equals("")) {
             User user = new User(login);

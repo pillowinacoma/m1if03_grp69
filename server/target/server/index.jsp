@@ -1,3 +1,6 @@
+<%@ page import="classes.User" %>
+<%@ page import="classes.Passage" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,11 +12,12 @@
 <body>
 <jsp:include page="composants/header.jsp"/>
 
+
 <main id="contenu" class="wrapper">
   <aside class="menu"></aside>
   <article class="contenu">
     <h1>Bienvenue sur Présence UCBL</h1>
-    <form method="post" action="interface.jsp" >
+    <form method="post" action="presence" >
       <p>
         <label>
           Entrez votre login :

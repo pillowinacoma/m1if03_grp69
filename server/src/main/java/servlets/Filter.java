@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebFilter("/*")
+//@WebFilter("/presence")
 public class Filter extends HttpFilter {
 
     @Override
@@ -20,20 +20,15 @@ public class Filter extends HttpFilter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         //on récupère la session
-       HttpSession sessionUser = request.getSession();
-
+        HttpSession session = request.getSession(true);
+       boolean boolUser = session.getAttribute("user") != null;
         //on recupere l'URL
         String chemin=request.getRequestURI().substring(request.getContextPath().length());
 
-
-
-
-       if(sessionUser.getAttribute("user")!=null || chemin.startsWith("/index.jsp")){
-
+       if(boolUser || chemin.startsWith("/index.jsp")){
             filterchain.doFilter(req,res);
 
-        }else if(chemin.startsWith("/interface.jsp")){
-
+        }else {
            if(request.getMethod().equals("POST")){
 
                    String login = request.getParameter("login");
@@ -41,23 +36,17 @@ public class Filter extends HttpFilter {
                        User user = new User(login);
                        user.setNom(request.getParameter("nom"));
                        user.setAdmin(request.getParameter("admin") != null && request.getParameter("admin").equals("on"));
-                       HttpSession session = request.getSession(true);
-                       session.setAttribute("user", user);
+                       request.getSession().setAttribute("user", user);
+                       response.addHeader("userlogin",  String.valueOf(session.getAttribute("user")));
                        response.sendRedirect("interface.jsp");
                    } else {
                        response.sendRedirect("index.jsp");
                    }
-               }
+             }
 
 
-
-           if(request.getMethod().equals("GET")){
-               response.sendRedirect("index.jsp");
-           }
-        }else{
-
-            response.sendRedirect("index.jsp");
         }
+
     }
 
 

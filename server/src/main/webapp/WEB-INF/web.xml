@@ -45,7 +45,7 @@
 
     <filter-mapping>
         <filter-name>Filter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/presence</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>

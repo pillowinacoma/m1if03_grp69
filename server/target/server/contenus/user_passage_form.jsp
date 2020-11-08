@@ -2,7 +2,7 @@
 <section>
     <h1>Passages d'un utilisateur</h1>
 
-    <form method="get" action="interface_admin.jsp">
+    <form method="get" action="admin">
         <label>
             Login de l'utilisateur cherché :
             <input type="text" name="login" autofocus>

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/interface_admin.jsp")
 public class AdminFilter  extends HttpFilter {
     @Override
     public void init(FilterConfig config) throws ServletException{}
@@ -28,7 +27,7 @@ public class AdminFilter  extends HttpFilter {
 
         if(sessionUser.getAttribute("user")!=null) {
 
-            if (user.getAdmin() == false) {
+            if (!user.getAdmin()) {
                 response.sendRedirect("interface.jsp");
             }else{
                 request.getRequestDispatcher("/interface_admin.jsp").forward(request,response);

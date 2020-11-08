@@ -31,7 +31,7 @@
             <tr>
                 <td>${salleEntry.value.nom}</td>
                 <td>
-                    <form action="interface_admin.jsp" method="post">
+                    <form action="admin" method="post">
                         <input type="text" name="capacite" size="3" value="${salleEntry.value.capacite != -1 ? salleEntry.value.capacite : ''}"/>
                         <input type="hidden" name="contenu" value="salles">
                         <input type="hidden" name="nomSalle" value="${salleEntry.value.nom}">

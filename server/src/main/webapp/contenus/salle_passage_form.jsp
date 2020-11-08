@@ -2,7 +2,7 @@
 <section>
     <h1>Passages dans une salle</h1>
 
-    <form method="get" action="interface_admin.jsp">
+    <form method="get" action="admin">
         <label>
             Nom de la salle cherchée :
             <input type="text" name="nomSalle" autofocus>

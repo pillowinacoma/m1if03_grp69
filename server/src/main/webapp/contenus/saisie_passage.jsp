@@ -4,8 +4,8 @@
     <h1>Passage dans une salle</h1>
     <p>Indiquez le nom d'une salle, et cliquez sur l'un des boutons pour indiquer que vous y entrez ou que vous en
         sortez.</p>
-    <form method="post" action="interface.jsp">
-        <input type="hidden" name="contenu" value="passages">
+    <form method="get" action="presence">
+        <input type="hidden" name="contenu" value="saisie_passage">
         <p>
             <label>
                 Nom de la salle :

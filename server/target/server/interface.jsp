@@ -4,17 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page errorPage="erreurs/error.jsp" %>
 
-<jsp:useBean id="passages" class="classes.GestionPassages"  type="classes.GestionPassages" scope="application"/>
-<jsp:useBean id="salles" class="java.util.HashMap" type="java.util.Map<java.lang.String,classes.Salle>" scope="application"/>
-<jsp:useBean id="users" class="java.util.HashMap" type="java.util.Map<java.lang.String,classes.User>" scope="application"/>
+<jsp:useBean id="gestionPassages"  type="classes.GestionPassages" scope="application"/>
+<jsp:useBean id="Salles"   type="java.util.Map<java.lang.String,classes.Salle>" scope="application"/>
+<jsp:useBean id="Users"  type="java.util.Map<java.lang.String,classes.User>" scope="application"/>
 
-<% // Très moche :
-  // - on essaye d'ajouter l'utilisateur à chaque requête
-  // - pas de contrôle sur les types des clés et des valeurs des entrées de la map
-  User user = (User) session.getAttribute("user");
-  if (!users.containsValue(user))
-    users.put(user.getLogin(), user);
-%>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -33,13 +27,13 @@
       <c:when test="${param.contenu == null }">
         <jsp:include page="contenus/default.jsp"/>
       </c:when>
-      <c:when test="${param.contenu == \"passages\"}">
-        <%
-          if (request.getParameter("nomSalle") != null)
-            request.setAttribute("passagesAffiches", passages.getPassagesByUserAndSalle((User) session.getAttribute("user"), new Salle(request.getParameter("nomSalle"))));
-          else
-            request.setAttribute("passagesAffiches", passages.getPassagesByUser((User) session.getAttribute("user"))); %>
-        <jsp:include page="contenus/passages.jsp"/>
+
+
+      <c:when test="${param.contenu == \"passagesUser\"}">
+          <jsp:include page="contenus/passages.jsp"/>
+      </c:when>
+      <c:when test="${param.contenu == \"saisie_passage_form\"}">
+        <jsp:include page="contenus/saisie_passage.jsp"/>
       </c:when>
       <c:when test="${param.contenu == \"user\"}">
         <jsp:include page="contenus/user.jsp?login=${sessionScope.user.login}"/>
