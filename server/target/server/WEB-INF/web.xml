@@ -1,0 +1,56 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
+
+
+  <display-name>Archetype Created Web Application</display-name>
+
+
+ <servlet>
+    <servlet-name>Init</servlet-name>
+    <servlet-class>servlets.Init</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Init</servlet-name>
+    <url-pattern>/Init</url-pattern>
+  </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Deco</servlet-name>
+        <servlet-class>servlets.Deco</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Deco</servlet-name>
+        <url-pattern>/Deco</url-pattern>
+    </servlet-mapping>
+
+
+    <filter>
+        <filter-name>Filter</filter-name>
+        <filter-class>servlets.Filter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>servlets.AdminFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Filter</filter-name>
+        <url-pattern>/presence</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/interface_admin.jsp</url-pattern>
+    </filter-mapping>
+
+
+</web-app>
