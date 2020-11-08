@@ -34,4 +34,23 @@
     </servlet-mapping>
 
 
+    <filter>
+        <filter-name>Filter</filter-name>
+        <filter-class>servlets.Filter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>servlets.AdminFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Filter</filter-name>
+        <url-pattern>/presence</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/interface_admin.jsp</url-pattern>
+    </filter-mapping>
+
+
 </web-app>

@@ -1,5 +1,4 @@
 package classes;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +6,7 @@ import java.util.List;
 public class GestionPassages {
     private final List<Passage> passages = new ArrayList<>();
 
-    public void add(Passage passage) {
+    public void addPassage(Passage passage) {
         this.passages.add(passage);
     }
 
@@ -32,6 +31,15 @@ public class GestionPassages {
     }
 
     /**
+     * Renvoie les passages d'un utilisateur dont il n'y a pas de date de sortie
+     * @param user L'user
+     * @return Une liste de passages en cours
+     */
+    public List<Passage> getPassagesByUserEncours(User user) {
+        return filterByEncours(filterByUser(passages, user));
+    }
+
+    /**
      * Renvoie les users dans une salle dans un intervalle de temps donné
      * @param salle La salle
      * @param debut Début de l'intervalle
@@ -44,7 +52,7 @@ public class GestionPassages {
 
     /**
      * Permet de retrouver un user pendant un intervalle de temps donné
-     * @param user
+     * @param user L'user
      * @param debut Début de l'intervalle
      * @Param fin Fin de l'intervalle
      * @return Une liste de passages en cours ou terminés
@@ -73,10 +81,19 @@ public class GestionPassages {
         return res;
     }
 
+    private List<Passage> filterByEncours(List<Passage> source) {
+        List<Passage> res = new ArrayList<>();
+        for (Passage passage : source) {
+            if(passage.getSortie() == null)
+                res.add(passage);
+        }
+        return res;
+    }
+
     private List<Passage> filterByDates(List<Passage> source, Date debut, Date fin) {
         List<Passage> res = new ArrayList<>();
         for (Passage passage : source) {
-            if(!passage.getEntree().after(debut) && (passage.getSortie() == null || !passage.getSortie().before(fin)))
+            if(!passage.getEntree().after(fin) && (passage.getSortie() == null || !passage.getSortie().before(debut)))
                 res.add(passage);
         }
         return res;

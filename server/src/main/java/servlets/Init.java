@@ -1,8 +1,13 @@
 package servlets;
 
 
+import classes.GestionPassages;
+import classes.Passage;
+import classes.Salle;
 import classes.User;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,25 +15,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
-//@WebServlet(name = "Init", urlPatterns = "/Init")
+@WebServlet(name = "Init", urlPatterns = "/Init", loadOnStartup = 1)
 public class Init extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+    @Override
+    public void init(ServletConfig config) throws ServletException{
+        ServletContext cntx = config.getServletContext();
+        cntx.setAttribute("Salles",new HashMap<String,Salle>());
+        cntx.setAttribute("Users",new HashMap<String,User>());
+        cntx.setAttribute("gestionPassages",new GestionPassages());
+
+    }
+
+
+    /* protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         if(login != null && !login.equals("")) {
+            User user = new User(login);
+            user.setNom(request.getParameter("nom"));
+            user.setAdmin(request.getParameter("admin") != null && request.getParameter("admin").equals("on"));
             HttpSession session = request.getSession(true);
-            session.setAttribute("user", new User(login));
-            session.setAttribute("admin", request.getParameter("admin") != null);
-            request.getRequestDispatcher("interface.jsp").forward(request, response);
+            session.setAttribute("user", user);
+            response.sendRedirect("interface.jsp");
         } else {
-            response.sendRedirect("index.html");
+            response.sendRedirect("index.jsp");
         }
     }
 
-
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect("index.jsp");
     }
+*/
+    @Override
+    public void destroy() {}
 
 }

@@ -1,49 +1,50 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mahmoud
-  Date: 31/10/2020
-  Time: 10:06
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="classes.Passage" %>
-<%@ page import="classes.GestionPassages" %>
-<%@ page import="classes.Salle" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="classes.User" %>
-<%@ page import="java.util.List" %>
-<html>
-  <head>
-    <title>Menu</title>
-  </head>
-  <body>
+<%@ page import="classes.Salle" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page errorPage="erreurs/error.jsp" %>
 
-  <h1> MENU </h1>
-
-  <c:url value="passage.jsp" var="passageUrl"/>
-  <c:url value="user.jsp" var="userUrl"/>
-  <c:url value="Deco" var="logoutUrl"/>
+<jsp:useBean id="gestionPassages"  type="classes.GestionPassages" scope="application"/>
+<jsp:useBean id="Salles"   type="java.util.Map<java.lang.String,classes.Salle>" scope="application"/>
+<jsp:useBean id="Users"  type="java.util.Map<java.lang.String,classes.User>" scope="application"/>
 
 
 
-  <div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Présence UCBL</title>
+  <link rel="stylesheet" type="text/css" href="static/presence.css">
+</head>
+<body>
+<jsp:include page="composants/header.jsp"/>
 
-  </div>
-
-  <div class="menu">
-    <ul>
-
-      <li><a href="${passageUrl}">Passage</a></li>
-      <li><a href="${userUrl}">User</a></li>
-
-
-      <li><a href="${logoutUrl}">Déconnexion</a></li>
-    </ul>
-    <br style="clear:left"/>
-  </div>
+<main class="wrapper">
+  <jsp:include page="composants/menu.jsp"/>
+  <article class="contenu">
+    <c:choose>
+      <c:when test="${param.contenu == null }">
+        <jsp:include page="contenus/default.jsp"/>
+      </c:when>
 
 
-  </body>
+      <c:when test="${param.contenu == \"passagesUser\"}">
+          <jsp:include page="contenus/passages.jsp"/>
+      </c:when>
+      <c:when test="${param.contenu == \"saisie_passage_form\"}">
+        <jsp:include page="contenus/saisie_passage.jsp"/>
+      </c:when>
+      <c:when test="${param.contenu == \"user\"}">
+        <jsp:include page="contenus/user.jsp?login=${sessionScope.user.login}"/>
+      </c:when>
+      <c:otherwise>
+        <jsp:include page="contenus/${param.contenu}.jsp"/>
+      </c:otherwise>
+    </c:choose>
+  </article>
+</main>
+
+<jsp:include page="composants/footer.html"/>
+</body>
 </html>
