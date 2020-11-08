@@ -28,4 +28,4 @@ deploy :
         - cd server && mvn package 
         - pwd
         - ls -l
-        - scp -v -o StrictHostKeyChecking=no -i ci_private_key.pem /builds/p1518166/m1if03_69/server/target/server.war gitlabci@192.168.75.115:/opt/tomcat/webapps/v1.war
+        - scp -v -o StrictHostKeyChecking=no -i ci_private_key.pem /builds/p1518166/m1if03_69/server/target/server.war gitlabci@192.168.75.115:/opt/tomcat/webapps/v2.war
