@@ -1,4 +1,5 @@
 package classes;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -6,8 +7,12 @@ import java.util.List;
 public class GestionPassages {
     private final List<Passage> passages = new ArrayList<>();
 
-    public void addPassage(Passage passage) {
+    public void add(Passage passage) {
         this.passages.add(passage);
+    }
+
+    public Passage getPassageById(int id) {
+        return passages.get(id);
     }
 
     /**
@@ -43,7 +48,7 @@ public class GestionPassages {
      * Renvoie les users dans une salle dans un intervalle de temps donné
      * @param salle La salle
      * @param debut Début de l'intervalle
-     * @Param fin Fin de l'intervalle
+     * @param fin Fin de l'intervalle
      * @return Une liste de passages en cours ou terminés
      */
     public List<Passage> getPassagesBySalleAndDates(Salle salle, Date debut, Date fin) {
@@ -54,7 +59,7 @@ public class GestionPassages {
      * Permet de retrouver un user pendant un intervalle de temps donné
      * @param user L'user
      * @param debut Début de l'intervalle
-     * @Param fin Fin de l'intervalle
+     * @param fin Fin de l'intervalle
      * @return Une liste de passages en cours ou terminés
      */
     public List<Passage> getPassagesByUserAndDates(User user, Date debut, Date fin) {

@@ -1,10 +1,11 @@
-servlets/PresenceController.class
-servlets/Init.class
-servlets/AdminFilter.class
+filters/AuthenticationFilter.class
 classes/Salle.class
 classes/User.class
 classes/Passage.class
-servlets/Deco.class
-servlets/Filter.class
+filters/AuthorizationFilter.class
+servlets/MainController.class
+utils/PresenceUcblJwtHelper.class
 servlets/AdminController.class
 classes/GestionPassages.class
+filters/Init.class
+fr/univlyon1/m1if/m1if03/servlets/Deco.class

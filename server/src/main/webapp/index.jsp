@@ -1,7 +1,4 @@
-<%@ page import="classes.User" %>
-<%@ page import="classes.Passage" %>
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,14 +7,13 @@
   <link rel="stylesheet" type="text/css" href="static/presence.css">
 </head>
 <body>
-<jsp:include page="composants/header.jsp"/>
-
+<jsp:include page="WEB-INF/jsp/composants/header.jsp"/>
 
 <main id="contenu" class="wrapper">
   <aside class="menu"></aside>
   <article class="contenu">
     <h1>Bienvenue sur Présence UCBL</h1>
-    <form method="post" action="presence" >
+    <form method="post" action="presence">
       <p>
         <label>
           Entrez votre login :
@@ -37,12 +33,12 @@
         </label>
       </p>
       <p>
-        <input type="submit" value="Connexion">
+        <input type="submit" name="action" value="Connexion">
       </p>
     </form>
   </article>
 </main>
 
-<jsp:include page="composants/footer.html"/>
+<jsp:include page="WEB-INF/jsp/composants/footer.html"/>
 </body>
 </html>

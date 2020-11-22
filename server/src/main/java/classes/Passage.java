@@ -4,15 +4,22 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Passage {
+    private static int counter = -1;
+    private final int id;
     private final User user;
     private final Salle salle;
     private final Date entree;
     private Date sortie;
 
+    private static int getCounter() {
+        return ++counter;
+    }
+
     public Passage(User user, Salle salle, Date entree) {
         this.user = user;
         this.salle = salle;
         this.entree = entree;
+        this.id = getCounter();
     }
 
     public void setSortie(Date sortie) throws IllegalArgumentException {
@@ -20,6 +27,10 @@ public class Passage {
             this.sortie = sortie;
         else
             throw new IllegalArgumentException("La date de sortie ne peut pas être antérieure à celle d'entrée.");
+    }
+
+    public int getId() {
+        return id;
     }
 
     public User getUser() {

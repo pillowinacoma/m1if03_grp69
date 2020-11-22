@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="server.war">
+    <root id="archive" name="tp4.war">
       <element id="artifact" artifact-name="server:war exploded" />
     </root>
   </artifact>
