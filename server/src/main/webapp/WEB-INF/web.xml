@@ -7,7 +7,7 @@
 
     <filter>
         <filter-name>Init</filter-name>
-        <filter-class> filters.Init</filter-class>
+        <filter-class>filters.Init</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Init</filter-name>
@@ -23,6 +23,10 @@
         <filter-name>Authentication</filter-name>
         <url-pattern>/presence</url-pattern>
         <url-pattern>/admin</url-pattern>
+        <url-pattern>/passages</url-pattern>
+        <url-pattern>/salles</url-pattern>
+        <url-pattern>/users</url-pattern>
+
     </filter-mapping>
 
     <filter>
@@ -36,7 +40,7 @@
 
     <filter>
         <filter-name>CorsFilter</filter-name>
-        <filter-class> org.apache.catalina.filters.CorsFilter</filter-class>
+        <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
         <init-param>
             <param-name>cors.allowed.origins</param-name>
             <param-value>http://editor.swagger.io</param-value>
