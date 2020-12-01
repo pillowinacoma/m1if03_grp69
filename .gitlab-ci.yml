@@ -25,7 +25,7 @@ deploy :
         - . conf.sh && echo "$CI_SSH_KEY" > ci_private_key.pem && chmod 400 ci_private_key.pem
         - mv ci_private_key.pem server
     script :
-        - cd server && mvn package 
+        - mvn package 
         - pwd
         - ls -l
         - scp -v -o StrictHostKeyChecking=no -i ci_private_key.pem /builds/p1518166/m1if03_69/server/target/tp4.war gitlabci@192.168.75.115:/opt/tomcat/webapps/v3.war
