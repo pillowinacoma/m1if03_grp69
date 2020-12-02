@@ -49,11 +49,14 @@ public class SallesController  extends HttpServlet {
 
          // Get uri
         String [] path=req.getRequestURI().split("/");
+        int size = path.length;
 
-        if(path.length > 0){
 
-            if(path.length==2){
-                if(path[1].equals("salles")){
+        if(path.length !=0 ){
+
+            /* salles */
+            if(path.length !=0 &&  path[size-1].equals("salles") ){
+
 
                     String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
                     List<String> responseURL = new ArrayList<>();
@@ -64,28 +67,27 @@ public class SallesController  extends HttpServlet {
 
                     resp.setStatus(HttpServletResponse.SC_OK);
 
-                }
+
 
             }
 
             // *************  /salles/{salleID}
-            if(path.length==3){
-                if(path[1].equals("salles")){
-                    String salleName = path[2];
+            if(path.length!=0 && path[size-2].equals("salles")){
+
+                    String salleName = path[size-1];
                     Salle salle =  salles.get(salleName);
                     Json_Object(salle, resp);
                     resp.setStatus(HttpServletResponse.SC_OK);
-                }
+
 
             }
 
             //********** /salles/{salleID}/passages
             //renvoie uri des passages dans la salle specifiée
 
-            if (path.length==4) {
-                if (path[1].equals("salles")) {
-                    if (path[3].equals("passages")) {
-                        Salle sallePassage =salles.get(path[2]);
+            if (path.length!=0 && path[size-3].equals("salles") && path[size-1].equals("passages") ) {
+
+                        Salle sallePassage =salles.get(path[size-2]);
                         List<Passage> passagebysalle = passages.getPassagesBySalle(sallePassage);
 
                         String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
@@ -97,8 +99,7 @@ public class SallesController  extends HttpServlet {
                         }
                         Json_Object(responseURL, resp);
                         resp.setStatus(HttpServletResponse.SC_SEE_OTHER);
-                    }
-                }
+
 
             }
 
@@ -115,12 +116,13 @@ public class SallesController  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String [] path=req.getRequestURI().split("/");
+        int size=path.length;
 
-        if(path.length > 0) {
+        if(path.length != 0) {
 
            //  /salles
-            if (path.length == 2) {
-                if (path[1].equals("salles")) {
+            if (path.length!=0 && path[size-1].equals("salles")) {
+
                     JsonObject data =  payloadData(req);
                     String salleName = data.get("nomSalle").getAsString();
                     Salle salle = new Salle(salleName);
@@ -130,7 +132,7 @@ public class SallesController  extends HttpServlet {
                     }
                     Json_Object(salle,resp);
 
-                }
+
             }
         }
 
@@ -139,11 +141,12 @@ public class SallesController  extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String [] path=req.getRequestURI().split("/");
-        if(path.length > 0) {
+        int size=path.length;
+        if(path.length !=0) {
             /* /salles/{salleID}*/
-            if(path.length==3){
-                if(path[1].equals("salles")){
-                    String salleName = path[2];
+            if(path.length!=0 && path[size-2].equals("salles")){
+
+                    String salleName = path[size-1];
                     JsonObject data =  payloadData(req);
                     String sallePayload = String.valueOf(data.get("nomSalle").getAsString());
 
@@ -161,7 +164,7 @@ public class SallesController  extends HttpServlet {
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
 
-                }
+
             }
         }
     }
@@ -170,15 +173,12 @@ public class SallesController  extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String [] path=req.getRequestURI().split("/");
-        if(path.length>0){
-            if(path.length==3){
-                if(path[1].equals("salles")){
-                    String salleName=path[2];
+        int size=path.length;
 
+        if(path.length!=0){
+            if(path.length!=0 && path[size-2].equals("salles")){
 
-                 /*   salles.remove(salles.get(salles.keySet().equals(salleName)));
-
-                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);*/
+                    String salleName=path[size-1];
 
                     for (Map.Entry<String,Salle> entry : salles.entrySet()){
                         if(entry.getKey().equals(salleName)){
@@ -190,7 +190,7 @@ public class SallesController  extends HttpServlet {
                     }
 
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                }
+
             }
         }
     }

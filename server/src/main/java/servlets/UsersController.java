@@ -18,10 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet(name = "UsersController", urlPatterns = {"/users","/users/*"})
 public class UsersController extends HttpServlet {
@@ -43,7 +40,10 @@ public class UsersController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String [] path=req.getRequestURI().split("/");
-        if(path.length>0) {
+
+        int size=path.length;
+
+        if(path.length!=0) {
 
             List<User> userList=new ArrayList<>();
             Set<String> keys = users.keySet();
@@ -51,9 +51,9 @@ public class UsersController extends HttpServlet {
                 userList.add(users.get(key));
             }
 
-            // ********* localhost:8080/user
-            if (path.length == 2) {
-                if (path[1].equals("users")) {
+            // ********* localhost:8080/users
+            if (path.length!= 0 && path[size-1].equals("users")) {
+
 
                     String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
                     List<String> responseURL = new ArrayList<>();
@@ -63,27 +63,26 @@ public class UsersController extends HttpServlet {
                     Json_Object(responseURL, resp);
 
                     resp.setStatus(HttpServletResponse.SC_OK);
-                }
+
             }
 
 
             // ********** localhost:8080/users/{userid}
 
-            if(path.length ==3){
-                if(path[1].equals("users")){
-                    User  user = users.get(path[2]);
+            if(path.length !=0 && path[size-2].equals("users")){
+
+                    User  user = users.get(path[size-1]);
                     Json_Object(user,resp);
                     resp.setStatus(HttpServletResponse.SC_OK);
 
 
-                }
+
             }
 
 
             //************ localhost:8080/users/{userId}/passages
-            if (path.length==4) {
-                if (path[1].equals("users")) {
-                    if (path[3].equals("passages")) {
+            if (path.length!=0 && path[size-3].equals("users") && path[size-1].equals("passages")) {
+
                         User userPassage = users.get(path[2]);
                         List<Passage> passagebyUser = passages.getPassagesByUser(userPassage);
 
@@ -94,8 +93,7 @@ public class UsersController extends HttpServlet {
                         }
                         Json_Object(responseURL, resp);
                         resp.setStatus(HttpServletResponse.SC_SEE_OTHER);
-                    }
-                }
+
 
             }
 
@@ -109,9 +107,10 @@ public class UsersController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String [] path=req.getRequestURI().split("/");
+        int size= path.length;
 
-        if(path.length==3){
-            String var=path[2];
+        if(path.length!=0 ){
+            String var=path[size-1];
             if(var.equals("login")){
                 JsonObject data =  payloadData(req);
                 String loginuser = data.get("login").getAsString();
@@ -137,6 +136,30 @@ public class UsersController extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String [] path=req.getRequestURI().split("/");
+        int size= path.length;
+
+        if(size !=0){
+
+            // users/{userid}/nom
+            if(path[size-3].equals("users") && path[size-1].equals("nom") ){
+
+                String login = path[size-2];
+                JsonObject data =  payloadData(req);
+                String nomUser = String.valueOf(data.get("nom").getAsString());
+
+
+
+                if(users.containsKey(login)){
+                    users.get(login).setNom(nomUser);
+                }
+
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+
+
+            }
+        }
 
     }
 

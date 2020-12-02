@@ -49,11 +49,12 @@ public class PassagesController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Get uri
         String [] path=req.getRequestURI().split("/");
-        if(path.length>0){
+        int size=path.length;
+        if(path.length!=0){
 
             // /passages
-            if(path.length==2){
-                if(path[1].equals("passages")){
+            if(path.length!=0 && path[size-1].equals("passages") ){
+
                     List<Passage> passageAll=passages.getAllPassages();
 
                     String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
@@ -64,31 +65,29 @@ public class PassagesController extends HttpServlet {
                     Json_Object(responseURL, resp);
 
                     resp.setStatus(HttpServletResponse.SC_OK);
-                }
+
             }
 
 
             //**********  /passages/{id}
             //liste des passages par l'identifiant
-            if(path.length==3){
-                if(path[1].equals("passages")){
-                    String idPassage=path[2];
+            if(path.length!=0 && path[size-2].equals("passages") ){
+
+                    String idPassage=path[size-1];
 
                     Integer id=Integer.parseInt(idPassage);
                     Passage passagebyid= passages.getPassageById(id);
 
                     Json_Object(passagebyid,resp);
                     resp.setStatus(HttpServletResponse.SC_OK);
-                }
 
             }
 
 
             //*********** localhost:8080/passages/byUser/{userId}
 
-            if(path.length==4){
-                if(path[1].equals("passages")){
-                    if(path[2].equals("byUser")){
+            if(path.length!=0 && path[size-3].equals("passages") && path[size-2].equals("byUser")){
+
                         String passagebyuser=path[3];
                         User user=users.get(passagebyuser);
 
@@ -106,65 +105,63 @@ public class PassagesController extends HttpServlet {
                         Json_Object(responseURL,resp);
                         resp.setStatus(HttpServletResponse.SC_OK);
 
-                    }
-                }
 
             }
             //********** localhost:8080/passages/byUserAndSalle/{userId}/{salleId}
 
-            if(path.length==5){
-                if(path[2].equals("byUserAndSalle")){
-                    String userId=path[3];
-                    String salleId=path[4];
-                    User userbyUserbySalle=users.get(userId);
-                    Salle sallebyUserbySalle=salles.get(salleId);
+            if(path.length!=0 && path[size-3].equals("byUserAndSalle") ) {
 
-                    List<Passage> passagebyUserbySalleList=passages.getPassagesByUserAndSalle(userbyUserbySalle,sallebyUserbySalle);
-                    String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
-                    List<String> responseURL = new ArrayList<>();
-                    for (Passage p : passagebyUserbySalleList) {
-                        if (p.getSalle().getNom().equals(sallebyUserbySalle.getNom()) && p.getUser().getLogin().equals(userbyUserbySalle.getLogin())) {
+                String userId = path[size - 2];
+                String salleId = path[size - 1];
+                User userbyUserbySalle = users.get(userId);
+                Salle sallebyUserbySalle = salles.get(salleId);
 
-                            responseURL.add(URL + "/passages/" + p.getId());
-                        }
+                List<Passage> passagebyUserbySalleList = passages.getPassagesByUserAndSalle(userbyUserbySalle, sallebyUserbySalle);
+                String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
+                List<String> responseURL = new ArrayList<>();
+                for (Passage p : passagebyUserbySalleList) {
+                    if (p.getSalle().getNom().equals(sallebyUserbySalle.getNom()) && p.getUser().getLogin().equals(userbyUserbySalle.getLogin())) {
+
+                        responseURL.add(URL + "/passages/" + p.getId());
                     }
-
-                    Json_Object(responseURL,resp);
-                    resp.setStatus(HttpServletResponse.SC_OK);
                 }
+
+                Json_Object(responseURL, resp);
+                resp.setStatus(HttpServletResponse.SC_OK);
+            }
 
             //*********** localhost:8080/passages/byUser/{userId}/enCours
 
-                if(path[2].equals("byUser") && path[4].equals("enCours")){
-                    String userId=path[3];
+            if(path[2].equals("byUser") && path[4].equals("enCours")){
+                String userId=path[size-2];
 
-                    User userbyUserenCours=users.get(userId);
+                User userbyUserenCours=users.get(userId);
 
-                    List<Passage> passageUser=passages.getPassagesByUser(userbyUserenCours);
-                    List<Passage> passageUserenCours=new ArrayList<>();
-                    String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
-                    List<String> responseURL = new ArrayList<>();
+                List<Passage> passageUser=passages.getPassagesByUser(userbyUserenCours);
+                List<Passage> passageUserenCours=new ArrayList<>();
+                String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
+                List<String> responseURL = new ArrayList<>();
 
 
-                    for(Passage p:passageUser ) {
-                        if (p.getSortie()==null){
+                for(Passage p:passageUser ) {
+                    if (p.getSortie()==null){
                             //System.out.println(p.getSortie());
-                            passageUserenCours.add(p);
-                        }
-
+                        passageUserenCours.add(p);
                     }
-
-                    for(Passage p:passageUserenCours){
-                        responseURL.add(URL + "/passages/" + p.getId());
-                    }
-
-                    Json_Object(responseURL,resp);
-                    resp.setStatus(HttpServletResponse.SC_OK);
-
 
                 }
 
+                for(Passage p:passageUserenCours){
+                    responseURL.add(URL + "/passages/" + p.getId());
+                }
+
+                Json_Object(responseURL,resp);
+                resp.setStatus(HttpServletResponse.SC_OK);
+
+
             }
+
+
         }
 
     }
