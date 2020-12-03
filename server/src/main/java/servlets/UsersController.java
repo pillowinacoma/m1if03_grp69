@@ -6,6 +6,7 @@ import classes.Salle;
 import classes.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import utils.PresenceUcblJwtHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -39,9 +40,9 @@ public class UsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String [] path=req.getRequestURI().split("/");
+        String  path [] =req.getRequestURI().split("/");
 
-        int size=path.length;
+        int size= path.length;
 
         if(path.length!=0) {
 
@@ -50,9 +51,15 @@ public class UsersController extends HttpServlet {
             for(String key : keys){
                 userList.add(users.get(key));
             }
+            String ressource="users";
 
             // ********* localhost:8080/users
-            if (path.length!= 0 && path[size-1].equals("users")) {
+            if (ressource.equals(path[size-1])) {
+                    System.out.println("Je suis rentré");
+                    System.out.println(path[size-1]);
+                System.out.println(path[size-2]);
+                System.out.println(path[size-3]);
+                    System.out.println(path.length);
 
 
                     String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
@@ -63,25 +70,19 @@ public class UsersController extends HttpServlet {
                     Json_Object(responseURL, resp);
 
                     resp.setStatus(HttpServletResponse.SC_OK);
-
+                    return;
             }
-
-
-            // ********** localhost:8080/users/{userid}
-
-            if(path.length !=0 && path[size-2].equals("users")){
-
-                    User  user = users.get(path[size-1]);
+            if(ressource.equals(path[size-2]) ){
+                // ********** localhost:8080/users/{userid}
+                User  user = users.get(path[size-1]);
                     Json_Object(user,resp);
                     resp.setStatus(HttpServletResponse.SC_OK);
 
-
-
+                    return;
             }
 
-
-            //************ localhost:8080/users/{userId}/passages
-            if (path.length!=0 && path[size-3].equals("users") && path[size-1].equals("passages")) {
+            if (ressource.equals(path[size-3]) && path[size-1].equals("passages")) {
+                //************ localhost:8080/users/{userId}/passages
 
                         User userPassage = users.get(path[2]);
                         List<Passage> passagebyUser = passages.getPassagesByUser(userPassage);
@@ -93,12 +94,9 @@ public class UsersController extends HttpServlet {
                         }
                         Json_Object(responseURL, resp);
                         resp.setStatus(HttpServletResponse.SC_SEE_OTHER);
-
+                        return;
 
             }
-
-
-
 
 
         }
@@ -109,26 +107,32 @@ public class UsersController extends HttpServlet {
         String [] path=req.getRequestURI().split("/");
         int size= path.length;
 
-        if(path.length!=0 ){
+        if(path.length!=0 && path[size-2].equals("users")){
             String var=path[size-1];
             if(var.equals("login")){
                 JsonObject data =  payloadData(req);
                 String loginuser = data.get("login").getAsString();
                 User user=new User(loginuser);
-                String nom=data.get("login").getAsString();
+                String nom=data.get("nom").getAsString();
                 Boolean admin=data.get("admin").getAsBoolean();
                 user.setAdmin(admin);
                 user.setNom(nom);
 
-                if(users.containsKey(user)){
-
+                if(!users.containsKey(user)){
+                    users.put(loginuser,user);
                 }
+                String url = getUrlDeBase(String.valueOf(req.getRequestURL()));
 
-            }else if (var.equals("logout")){
-                req.getSession().invalidate();
+                //Authentification avec TOKEN JWT
+                PresenceUcblJwtHelper presenceUcblJwtHelper = new PresenceUcblJwtHelper();
+                String jwt = presenceUcblJwtHelper.generateToken(url + "/users/"+ loginuser,admin,req);
+                resp.setHeader( "Authorization", jwt );
+
+                resp.addHeader("Location", getUrlDeBase(String.valueOf(req.getRequestURL()) )+ "/users/" + loginuser);
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            }else{
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+
+
             }
         }
 

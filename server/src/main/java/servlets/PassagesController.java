@@ -197,8 +197,6 @@ public class PassagesController extends HttpServlet {
                     }
 
 
-
-
                     User user=new User(userpayload);
                     Salle salle = new Salle(sallepayload);
 
@@ -207,11 +205,7 @@ public class PassagesController extends HttpServlet {
 
                     Passage passagepayload=new Passage(user,salle,dateEntree);
 
-                   /* for(Passage p:passages.getAllPassages()){
-                        if(p !=passagepayload){
 
-                        }
-                    }*/
                     passages.add(passagepayload);
                     for(Passage p:passages.getAllPassages()) {
                         if (p == passagepayload) {
@@ -221,12 +215,6 @@ public class PassagesController extends HttpServlet {
 
                     resp.setStatus(HttpServletResponse.SC_CREATED);
 
-                    /*if(!salles.containsKey(sallepayload)){
-                        salles.put(sallepayload, salle);
-                        resp.setStatus(HttpServletResponse.SC_CREATED);
-                    }*/
-
-                    //Json_Object(salle,resp);
 
                 }
             }

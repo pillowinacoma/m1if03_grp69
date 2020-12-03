@@ -101,6 +101,8 @@ public class SallesController  extends HttpServlet {
                         resp.setStatus(HttpServletResponse.SC_SEE_OTHER);
 
 
+            }else if((path[size-3].equals("salles") && !path[size-1].equals("passages")) || (!path[size-3].equals("salles") && !path[size-1].equals("passages")) ){
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
 
 
@@ -129,10 +131,13 @@ public class SallesController  extends HttpServlet {
                     if(!salles.containsKey(salleName)){
                         salles.put(salleName, salle);
                         resp.setStatus(HttpServletResponse.SC_CREATED);
+                        System.out.println("sallecree");
                     }
                     Json_Object(salle,resp);
 
 
+            }else{
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
 
