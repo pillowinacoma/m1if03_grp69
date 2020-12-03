@@ -46,6 +46,8 @@ public class UsersController extends HttpServlet {
 
         if(path.length!=0) {
 
+
+
             List<User> userList=new ArrayList<>();
             Set<String> keys = users.keySet();
             for(String key : keys){
@@ -54,12 +56,8 @@ public class UsersController extends HttpServlet {
             String ressource="users";
 
             // ********* localhost:8080/users
-            if (ressource.equals(path[size-1])) {
-                 /*   System.out.println("Je suis rentré");
-                    System.out.println(path[size-1]);
-                System.out.println(path[size-2]);
-                System.out.println(path[size-3]);
-                    System.out.println(path.length);*/
+            if (path[size-1].equals("users")) {
+
 
 
                     String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
