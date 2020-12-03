@@ -41,18 +41,19 @@ public class SallesController  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Salle> salleList=new ArrayList<>();
-        Set<String> keys = salles.keySet();
-        for(String key : keys){
-            salleList.add(salles.get(key));
-        }
+
 
          // Get uri
-        String [] path=req.getRequestURI().split("/");
+        String  path [] =req.getRequestURI().split("/");
         int size = path.length;
 
 
         if(path.length !=0 ){
+            List<Salle> salleList=new ArrayList<>();
+            Set<String> keys = salles.keySet();
+            for(String key : keys){
+                salleList.add(salles.get(key));
+            }
 
             /* salles */
             if(path.length !=0 &&  path[size-1].equals("salles") ){

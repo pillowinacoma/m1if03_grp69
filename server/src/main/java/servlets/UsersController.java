@@ -55,11 +55,11 @@ public class UsersController extends HttpServlet {
 
             // ********* localhost:8080/users
             if (ressource.equals(path[size-1])) {
-                    System.out.println("Je suis rentré");
+                 /*   System.out.println("Je suis rentré");
                     System.out.println(path[size-1]);
                 System.out.println(path[size-2]);
                 System.out.println(path[size-3]);
-                    System.out.println(path.length);
+                    System.out.println(path.length);*/
 
 
                     String URL = getUrlDeBase(String.valueOf(req.getRequestURL()));
