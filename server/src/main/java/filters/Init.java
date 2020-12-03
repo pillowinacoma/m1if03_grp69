@@ -14,6 +14,7 @@ import java.util.Map;
 
 @WebFilter(filterName = "Init")
 public class Init extends HttpFilter {
+
     @Override
     public void init(FilterConfig config) throws ServletException {
         super.init(config);

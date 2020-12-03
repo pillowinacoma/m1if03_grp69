@@ -34,7 +34,7 @@ public class MainController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+       /* HttpSession session = request.getSession();
 
         if (request.getParameter("action") == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action non spécifiée.");
@@ -72,11 +72,11 @@ public class MainController extends HttpServlet {
                 return;
             }
         }
-        doGet(request, response);
+        doGet(request, response);*/
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+      /*  HttpSession session = request.getSession();
         if (request.getParameter("contenu") != null) {
             switch (request.getParameter("contenu")) {
                 case "passages":
@@ -121,5 +121,7 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/interface.jsp");
         dispatcher.include(request, response);
+    }
+    */
     }
 }
